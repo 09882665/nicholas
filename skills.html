@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Development Skills</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+
+        header {
+            background-color: #007bff;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        main {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .skills {
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .skill {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+            position: relative;
+        }
+
+        .skill:hover {
+            transform: translateY(-5px);
+        }
+
+        h2 {
+            color: #007bff;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        .like-dislike {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .like-dislike button {
+            border: none;
+            background: none;
+            cursor: pointer;
+            color: #007bff;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        .like-dislike button:focus {
+            outline: none;
+        }
+
+        .like-dislike .count {
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Web Development Skills</h1>
+    </header>
+    <main>
+        <section class="skills">
+            <div class="skills-container">
+                <div class="skill" id="html5">
+                    <h2>HTML5</h2>
+                    <p>
+                        Proficient in writing semantic HTML code to structure web pages, ensuring clear and meaningful content organization.
+                    </p>
+                    <p>
+                        Understanding of accessibility best practices and techniques to create web content that is perceivable, operable, and understandable by users with disabilities.
+                    </p>
+                    <p>
+                        Knowledgeable about SEO-friendly HTML markup, including proper use of headings, meta tags, alt attributes for images, and semantic elements.
+                    </p>
+                    <div class="like-dislike">
+                        <button class="like-btn"><i class="fas fa-thumbs-up"></i></button>
+                        <button class="dislike-btn"><i class="fas fa-thumbs-down"></i></button>
+                        <span class="count"></span>
+                    </div>
+                </div>
+                <div class="skill" id="css3">
+                    <h2>CSS3</h2>
+                    <p>
+                        Experienced in applying CSS styles to HTML elements for layout, typography, colors, and visual effects, using techniques like cascading, specificity, and inheritance.
+                    </p>
+                    <p>
+                        Proficient in creating responsive and mobile-first designs using CSS media queries, flexbox, and grid layout to ensure optimal viewing experiences across various devices and screen sizes.
+                    </p>
+                    <p>
+                        Familiar with CSS preprocessors like Sass and Less, enabling modularization, variables, mixins, and other advanced features to streamline CSS development and maintenance.
+                    </p>
+                    <div class="like-dislike">
+                        <button class="like-btn"><i class="fas fa-thumbs-up"></i></button>
+                        <button class="dislike-btn"><i class="fas fa-thumbs-down"></i></button>
+                        <span class="count"></span>
+                    </div>
+                </div>
+                <div class="skill" id="javascript">
+                    <h2>JavaScript (JS)</h2>
+                    <p>
+                        Strong understanding of fundamental JavaScript concepts, including variables, data types, operators, functions, loops, and conditionals.
+                    </p>
+                    <p>
+                        Proficient in interacting with the Document Object Model (DOM) using JavaScript to dynamically update and manipulate HTML elements, handle user events, and create interactive web experiences.
+                    </p>
+                    <p>
+                        Knowledgeable about asynchronous JavaScript programming, including callbacks, promises, async/await, and handling asynchronous operations like fetching data from APIs.
+                    </p>
+                    <p>
+                        Skilled in implementing client-side form validation using JavaScript to enhance user experience and ensure data integrity before submitting data to the server.
+                    </p>
+                    <p>
+                        Familiar with popular JavaScript libraries and frameworks such as React.js, Vue.js, and Angular.js for building dynamic and scalable web applications.
+                    </p>
+                    <div class="like-dislike">
+                        <button class="like-btn"><i class="fas fa-thumbs-up"></i></button>
+                        <button class="dislike-btn"><i class="fas fa-thumbs-down"></i></button>
+                        <span class="count"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    <script>
+        // Function to display the popup
+        function displayPopup() {
+            alert("Welcome to Web Development Skills page!");
+        }
+
+        // Trigger the popup when the page finishes loading
+        window.onload = displayPopup;
+
+        document.querySelectorAll('.skill').forEach(skill => {
+            const likeBtn = skill.querySelector('.like-btn');
+            const dislikeBtn = skill.querySelector('.dislike-btn');
+            const countSpan = skill.querySelector('.count');
+            const skillId = skill.id;
+
+            let likes = parseInt(localStorage.getItem(`${skillId}-likes`)) || 0;
+            let dislikes = parseInt(localStorage.getItem(`${skillId}-dislikes`)) || 0;
+
+            updateCounts();
+
+            likeBtn.addEventListener('click', likeButtonClick);
+            dislikeBtn.addEventListener('click', dislikeButtonClick);
+
+            function likeButtonClick() {
+                if (likes === 0 && dislikes === 0) {
+                    likes++;
+                    updateCounts();
+                    localStorage.setItem(`${skillId}-likes`, likes);
+                    likeBtn.removeEventListener('click', likeButtonClick);
+                    dislikeBtn.removeEventListener('click', dislikeButtonClick);
+                }
+            }
+
+            function dislikeButtonClick() {
+                if (likes === 0 && dislikes === 0) {
+                    dislikes++;
+                    updateCounts();
+                    localStorage.setItem(`${skillId}-dislikes`, dislikes);
+                    likeBtn.removeEventListener('click', likeButtonClick);
+                    dislikeBtn.removeEventListener('click', dislikeButtonClick);
+                }
+            }
+
+            function updateCounts() {
+                countSpan.textContent = `${likes} likes, ${dislikes} dislikes`;
+            }
+        });
+    </script>
+</body>
+</html>

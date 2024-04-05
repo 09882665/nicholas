@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Upload and Display</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f2f2f2;
+  }
+  #preview {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .preview-image-container {
+    position: relative;
+    margin: 10px;
+  }
+  .preview-image {
+    max-width: 300px;
+    max-height: 300px;
+    cursor: pointer;
+  }
+  .delete-button {
+    position: absolute;
+    top: 5px;
+    right: 35px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border: none;
+    border-radius: 50%;
+    padding: 5px;
+    cursor: pointer;
+  }
+  .download-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border: none;
+    border-radius: 50%;
+    padding: 5px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<input type="file" id="file-input" accept="image/*">
+<button id="upload-button">Upload Images</button>
+<div id="preview"></div>
+
+<!-- Password Modal -->
+<div id="password-modal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p>Please enter the password:</p>
+    <input type="password" id="password-input">
+    <button id="password-submit">Submit</button>
+  </div>
+</div>
+
+<script>
+  // Password
+  const PASSWORD = "Spanner265";
+
+  // Modal
+  var modal = document.getElementById("password-modal");
+  var span = document.getElementsByClassName("close")[0];
+
+  // Event listeners
+  document.getElementById('upload-button').addEventListener('click', function() {
+    document.getElementById('file-input').click();
+  });
+
+  document.getElementById('file-input').addEventListener('change', function() {
+    var preview = document.getElementById('preview');
+    var files = this.files;
+
+    for (var i = 0; i < files.length; i++) {
+      var file = files[i];
+      var reader = new FileReader();
+
+      reader.onload = function(event) {
+        var imageData = event.target.result;
+
+        var container = document.createElement('div');
+        container.className = 'preview-image-container';
+
+        var img = document.createElement('img');
+        img.src = imageData;
+        img.className = 'preview-image';
+        container.appendChild(img);
+
+        var deleteButton = document.createElement('button');
+        deleteButton.className = 'delete-button';
+        deleteButton.innerHTML = '&#128465;'; // Trash icon
+        deleteButton.onclick = function() {
+          modal.style.display = "block";
+          // Store the image data to be deleted
+          var imageDataToDelete = imageData;
+          // On password submission, try to delete the image
+          document.getElementById("password-submit").onclick = function() {
+            var password = document.getElementById("password-input").value;
+            if (password === PASSWORD) {
+              // Remove the image from preview
+              container.remove();
+              // Remove the image from local storage
+              removeImage(imageDataToDelete);
+              // Close the modal
+              modal.style.display = "none";
+            } else {
+              alert("Incorrect password. Please try again.");
+            }
+          };
+        };
+        container.appendChild(deleteButton);
+
+        var downloadButton = document.createElement('a');
+        downloadButton.className = 'download-button';
+        downloadButton.innerHTML = '&#x2B07;'; // Download icon
+        downloadButton.href = imageData;
+        downloadButton.download = 'image'; // Default download filename
+        container.appendChild(downloadButton);
+
+        preview.appendChild(container);
+
+        saveImage(imageData);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  });
+
+  // Function to save image data to local storage
+  function saveImage(imageData) {
+    var images = JSON.parse(localStorage.getItem('images')) || [];
+    images.push(imageData);
+    localStorage.setItem('images', JSON.stringify(images));
+  }
+
+  // Function to remove image data from local storage
+  function removeImage(imageData) {
+    var images = JSON.parse(localStorage.getItem('images')) || [];
+    var index = images.indexOf(imageData);
+    if (index !== -1) {
+      images.splice(index, 1);
+      localStorage.setItem('images', JSON.stringify(images));
+    }
+  }
+
+  // Function to display images from local storage
+  function displayImagesFromLocalStorage() {
+    var preview = document.getElementById('preview');
+    preview.innerHTML = '';
+
+    var images = JSON.parse(localStorage.getItem('images')) || [];
+    images.forEach(function(imageData) {
+      var container = document.createElement('div');
+      container.className = 'preview-image-container';
+
+      var img = document.createElement('img');
+      img.src = imageData;
+      img.className = 'preview-image';
+      container.appendChild(img);
+
+      var deleteButton = document.createElement('button');
+      deleteButton.className = 'delete-button';
+      deleteButton.innerHTML = '&#128465;'; // Trash icon
+      deleteButton.onclick = function() {
+        modal.style.display = "block";
+        // Store the image data to be deleted
+        var imageDataToDelete = imageData;
+        // On password submission, try to delete the image
+        document.getElementById("password-submit").onclick = function() {
+          var password = document.getElementById("password-input").value;
+          if (password === PASSWORD) {
+            // Remove the image from preview
+            container.remove();
+            // Remove the image from local storage
+            removeImage(imageDataToDelete);
+            // Close the modal
+            modal.style.display = "none";
+          } else {
+            alert("Incorrect password. Please try again.");
+          }
+        };
+      };
+      container.appendChild(deleteButton);
+
+      var downloadButton = document.createElement('a');
+      downloadButton.className = 'download-button';
+      downloadButton.innerHTML = '&#x2B07;'; // Download icon
+      downloadButton.href = imageData;
+      downloadButton.download = 'image'; // Default download filename
+      container.appendChild(downloadButton);
+
+      preview.appendChild(container);
+    });
+  }
+
+  // Display images from local storage on page load
+  displayImagesFromLocalStorage();
+
+  // Close the modal when the close button is clicked
+  span.onclick = function() {
+    modal.style.display = "none";
+  };
+
+  // Close the modal when clicked outside of it
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  };
+</script>
+
+</body>
+</html>
