@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document Editor</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html-docx-js/0.5.0/html-docx.js"></script>
+  <style>
+    /* Your CSS styles here */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f0f0;
+    }
+    
+    .container {
+      width: 100%;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .container:focus {
+      outline: none; /* Remove blue outline */
+    }
+
+    .toolbar {
+      margin-bottom: 20px;
+      align-items: center;
+      background-color: #218838;
+    }
+
+    button, select, input[type="color"] {
+      padding: 8px 16px;
+      margin: 2px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    button:active {
+      transform: translateY(1px);
+    }
+
+    .editor {
+      width: 100%;
+      min-height: auto;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      outline: none; /* Remove default focus outline */
+      overflow-y: auto;
+      white-space: pre-wrap;
+      border-bottom: 1px solid #ccc; /* Add bottom border */
+      resize: none; /* Disable resizing */
+    }
+
+    /* Custom style for highlighting misspelled words */
+    .highlight-misspelled::-moz-spellcheck:not([suggested]) {
+      background-color: rgba(255, 0, 0, 0.3); /* Light red background for Firefox */
+    }
+
+    .highlight-misspelled::-webkit-spellcheck-not(:valid) {
+      background-color: rgba(255, 0, 0, 0.3); /* Light red background for WebKit browsers (Chrome, Safari) */
+    }
+
+    #downloadBtn {
+      background-color: #28a745;
+    }
+
+    #downloadBtn:hover {
+      background-color: #218838;
+    }
+
+    #downloadBtn:active {
+      transform: translateY(1px);
+    }
+    label {
+      border-radius: 40px;
+      background-color: blue;
+      margin-bottom: 20px;
+    }
+    #fileInput {
+      display: none;
+    }
+
+    /* Print layout styles */
+    @media print {
+      .no-print {
+        display: none !important;
+      }
+
+      .container {
+        padding: 0;
+      }
+
+      .toolbar {
+        display: none;
+      }
+
+      .editor {
+        width: 100%;
+        min-height: auto;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      .page-number::after {
+        content: counter(page);
+      }
+    }
+
+    @page {
+      counter-increment: page;
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <label for="fileInput" class="no-print">Choose document</label>
+    <input type="file" id="fileInput" accept=".txt,.doc,.docx,.html,.rtf,.pdf" style="margin-bottom: 20px;" class="no-print">
+    <div class="toolbar no-print">
+      <!-- Formatting buttons -->
+      <button onclick="applyFormatting('bold')"><i class="fas fa-bold"></i></button>
+      <button onclick="applyFormatting('italic')"><i class="fas fa-italic"></i></button>
+      <button onclick="applyFormatting('underline')"><i class="fas fa-underline"></i></button>
+      <button onclick="applyFormatting('justifyLeft')"><i class="fas fa-align-left"></i></button>
+      <button onclick="applyFormatting('justifyCenter')"><i class="fas fa-align-center"></i></button>
+      <button onclick="applyFormatting('justifyRight')"><i class="fas fa-align-right"></i></button>
+      <select onchange="changeFontSize(this.value)">
+        <option value="">Font Size</option>
+        <option value="8px">8px</option>
+        <option value="10px">10px</option>
+        <option value="12px">12px</option>
+        <option value="14px">14px</option>
+        <option value="16px">16px</option>
+        <option value="18px">18px</option>
+        <option value="20px">20px</option>
+      </select>
+      <input type="color" onchange="changeFontColor(this.value)">
+      <button onclick="clearFormatting()"><i class="fas fa-eraser"></i></button>
+      <button onclick="undo()"><i class="fas fa-undo"></i></button>
+      <button onclick="redo()"><i class="fas fa-redo"></i></button>
+      <button onclick="spellCheck()"><i class="fas fa-spell-check"></i></button>
+
+      <!-- Other buttons -->
+      <button id="downloadBtn">Download Document (.txt)</button>
+      <button id="downloadDocBtn">Download Document (.doc)</button>
+      <button onclick="printDocument()">Print</button>
+    </div>
+    <div class="editor" id="editor" contenteditable="true" onclick="focusEditor()"></div>
+  </div>
+  <script>
+    var editor = document.getElementById('editor');
+    var textStack = [];
+    var textIndex = -1;
+
+    editor.addEventListener('input', function() {
+      if (textIndex < textStack.length - 1) {
+        textStack.splice(textIndex + 1);
+      }
+      textStack.push(editor.innerHTML); // Use innerHTML to store the HTML content
+      textIndex = textStack.length - 1;
+    });
+
+    function undo() {
+      if (textIndex > 0) {
+        textIndex--;
+        editor.innerHTML = textStack[textIndex]; // Use innerHTML to set the HTML content
+      }
+    }
+
+    function redo() {
+      if (textIndex < textStack.length - 1) {
+        textIndex++;
+        editor.innerHTML = textStack[textIndex]; // Use innerHTML to set the HTML content
+      }
+    }
+
+    function applyFormatting(tag) {
+      document.execCommand(tag, false, null);
+    }
+
+    function changeFontSize(size) {
+      document.execCommand('fontSize', false, size);
+    }
+
+    function changeFontColor(color) {
+      document.execCommand('foreColor', false, color);
+    }
+
+    function clearFormatting() {
+      document.execCommand('removeFormat');
+    }
+
+    function spellCheck() {
+      // Toggle spell check on or off
+      editor.spellcheck = !editor.spellcheck;
+      
+      // If spell check is enabled, remove custom highlighting
+      if (editor.spellcheck) {
+        editor.classList.remove('highlight-misspelled');
+      } else { // If spell check is disabled, add custom highlighting
+        editor.classList.add('highlight-misspelled');
+      }
+    }
+
+    function focusEditor() {
+      editor.focus();
+    }
+
+    function printDocument() {
+      window.print();
+    }
+
+    function downloadDocumentAsDoc() {
+      var text = document.getElementById('editor').innerHTML;
+      var filename = 'document.doc';
+      var doc = HtmlDocx.asBlob(text);
+      saveAs(doc, filename);
+    }
+
+    document.getElementById('downloadBtn').addEventListener('click', function() {
+      var text = document.getElementById('editor').innerText;
+      var filename = 'document.txt';
+      var blob = new Blob([text], {type: 'text/plain'});
+      var link = document.createElement('a');
+      link.download = filename;
+      link.href = window.URL.createObjectURL(blob);
+      link.click();
+    });
+
+    document.getElementById('downloadDocBtn').addEventListener('click', downloadDocumentAsDoc);
+
+    document.getElementById('fileInput').addEventListener('change', function(event) {
+      var file = event.target.files[0];
+      var reader = new FileReader();
+      reader.onload = function(event) {
+        editor.innerHTML = event.target.result; // Set the content of the editor to the uploaded file
+      };
+      reader.readAsText(file); // Read file as text
+    });
+  </script>
+</body>
+</html>
