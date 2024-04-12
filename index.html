@@ -3,268 +3,112 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>exploring </title>
+  <title>Login and Register</title>
   <style>
-    /* CSS styles */
+    
     body {
-      background-color: #f2f2f2;
       font-family: Arial, sans-serif;
-      margin: 20px; /* Adding margin */
-      padding: 0;
-      font-size: medium; align:center;
-    }
+      margin: 0;
+      padding: 0;background-color: green;
+      border-style: outset;cursor:pointer;
 
-    .header {
-      background-color:black;
-      color:white;
-      text-align: center;
-      padding: 20px;
     }
-
     .container {
-      background-color:burlywood;
-      padding: 4px;
-      margin: 5px;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      text-align: center; /* Align center */
-    }
-
-    .dropdown {
-      display: inline-block;
-      margin: 5px;
-    }
-
-    .dropbtn{
-      background-color: #4CAF50; /* Green button color */
-      color: white;
-      font-size: 16px;
-      border: none;
-      cursor: pointer;
-      border-radius: 50px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      padding: 10px 20px;
-      text-align: center; /* Align center */
-    }
-
-    /* Dropdown content (hidden by default) */
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      background-color: white;
-      min-width: 160px;
-      box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-      z-index: 1;
-      text-align: center; /* Align left */
-    }
-
-    /* Links inside the dropdown */
-    .dropdown-content a {
-      color: black;
-      padding: 12px 16px;
-      text-decoration: none;
-      display: block;
-    }
-
-    /* Change color of dropdown links on hover */
-    .dropdown-content a:hover {
-      background-color: #f1f1f1;
-    }
-
-    /* Show the dropdown menu on hover */
-    .dropdown:hover .dropdown-content {
-      display: block;
-    }
-
-    /* Style tab content */
-    .tabcontent {
-      display: none;
-      padding: 20px;
-      color: blue;
+      width: 80%;
+      margin: 0 auto;
       text-align: center;
+      padding-top: 50px;
     }
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      margin: 10px;
+      cursor:pointer;background-color: blue;
+      border-radius: 50px;
 
-    /* Media queries for responsive design */
-    @media screen and (max-width: 600px) {
-      .dropbtn {
-        font-size: 14px;
-      }
     }
-
-    @media screen and (max-width: 400px) {
-      .dropbtn {
-        padding: 8px 12px;
-        font-size: 12px;
-      }
-      h1{font-size:10px;background-color:white; color:black;}
+    input[type="text"],
+    input[type="password"] {
+      padding: 8px;
+      font-size: 16px;
+      margin: 5px;
     }
+    h1{text-align: center;}
+    logout
   </style>
 </head>
 <body>
-
-<div class="header">
-  <h1>welcome home
-    </h1>
+<h1>WELCOME TO NTHUNGUNI SECONDARY SCHOOL<h1>
+<div class="container"><br>
+  <h1> </h1>
+    <button id="registerBtn">Register</button>
+  <button id="loginBtn">Login</button>
 </div>
 
-<div class="container">
-  <div class="dropdown">
-    <button class="dropbtn" onclick="openTab('home')">Home</button>
-    <div class="dropdown-content">
-      <a href="home.html">Home</a>
-    </div>
-  </div>
-
-  <div class="dropdown">
-    <button class="dropbtn" onclick="openTab('life_challenges')">Life Challenges</button>
-    <div class="dropdown-content">
-      <a href="lifechallenges.html">Life Challenges</a>
-    </div>
-  </div>
-
-  <div class="dropdown">
-    <button class="dropbtn" onclick="openTab('skills')">Skills</button>
-    <div class="dropdown-content">
-      <a href="skills.html">Skills</a>
-    </div>
-  </div>
-
-  <div class="dropdown">
-    <button class="dropbtn" onclick="openTab('academics')">Academics</button>
-    <div class="dropdown-content">
-      <a href="academics.html">Academics</a>
-    </div>
-  </div>
-  
-  <!-- Contact button -->
-  <button class="dropbtn" onclick="openTab('contact')">Contact</button>
-  <div class="dropdown-content">
-    <a href="contact.html">Contact</a>
-  </div>
-  <!-- End of Contact button -->
-</div>
-<div>
- <!-- End of Contact button -->
+<div id="registerForm" style="display: none;">
+  <h2>Registration</h2>
+  <input type="text" id="phoneNumberInput" placeholder="Enter your phone number">
+  <input type="password" id="passwordInput" placeholder="Create a password">
+  <button id="submitRegistration">Register</button>
 </div>
 
-
-
-<div id="home" class="tabcontent">
-  <!-- Content for the Home page -->
-   
-
+<div id="loginForm" style="display: none;">
+  <h2>Login</h2>
+  <input type="text" id="loginPhoneNumberInput" placeholder="Enter your phone number">
+  <input type="password" id="loginPasswordInput" placeholder="Enter your password">
+  <button id="submitLogin">Login</button>
 </div>
-
-<div id="life_challenges" class="tabcontent">
-  <!-- Content for the Life Challenges page -->
-
-</div>
-
-<div id="skills" class="tabcontent">
-  <!-- Content for the Skills page  skills-->
-  
-</div>
-
-<div id="academics" class="tabcontent">
-  <!-- Content for the Academics page -->
-  
-</div> <h1 style="color: black;"> NICHOLAS ACADEMIC RECOGNITION BY NTHUNGUNI SECONDARY SCHOOL</h1>
-   
-<p>In a remarkable turn of events, Nicholas's outstanding academic performance and exemplary conduct caught the attention of Mr. Pythias Matuanga, the principal of Nthunguni Secondary School.<br>
-Impressed by Nicholas's dedication and intelligence, Mr. Matuanga saw potential in him beyond being just a student.</p>
-
-<p>In the year following Nicholas's graduation, <em>Mr. Matuanga<em> approached him with a unique proposition.<br>
-Recognizing Nicholas's leadership qualities and academic prowess, he offered him the opportunity to assist the teachers in teaching.<br>
-This invitation was a testament to Nicholas's exceptional character and the high regard in which he was held by the school administration.</p>
-
-<p>Nicholas accepted the offer with gratitude and humility, eager to contribute to the educational environment that had shaped him.<br>
-He found immense fulfillment in sharing his knowledge and experiences with his peers, serving as a mentor and role model to younger students.</p>
-<img src="C:\Users\user\Pictures\InShot_20230717_163203648.jpg" width="350" height="300"><br><em ><u>Nicholas in  the  office</u></em></img>
-<p>Furthermore, Nicholas's efforts did not go unnoticed by the school community.<br>
-At the end of the second term, during the closing meeting of the year, Nicholas was given the opportunity to deliver a speech.<br>
-In his speech, he expressed his heartfelt appreciation to the principal, teachers, and fellow students for their unwavering support and cooperation throughout his journey at Nthunguni Secondary School.</p>
-
-<p>The culmination of Nicholas's time at Nthunguni Secondary School was marked by not only academic success but also by the recognition and respect he had earned from all those around him.<br>
-His dedication, humility, and resilience had left an indelible mark on the school community, inspiring others to strive for excellence and to overcome adversity with courage and determination.</p>
-<br>
-<br>
-
-<p> <img src="C:\Users\user\Pictures\spanner 1.jpg" width="400" height="300"><br><em><u>Nicholas Kyalo isA student of Moi university</u></em></br> </img></p>   was born in August 2003 in Machakos County, Kathiani sub-location, Mbee village.</p>
-    
-    <p>His early years were marked by the warmth of his rural surroundings and the love of his family.</p>
-    
-    <p>However, when Nicholas was in primary school, specifically in Grade 2, his parents' relationship took a turn.</p>
-    
-    <p>His mother made the difficult decision to divorce his father, leaving Nicholas and his father to face new challenges.</p>
-    
-    <p>With his mother starting a new life with another partner, Nicholas's father found himself in the role of a single parent, tasked with the responsibility of caring for his son.</p>
-    
-    <p>The sudden change in family dynamics was not easy, but Nicholas's father did his best to provide for him.</p>
-    
-    <p>During this time, Nicholas's grandmother stepped in to lend a helping hand.</p>
-    <img src="C:\Users\user\Pictures\Camera Roll\IMG_20230730_154844_5.jpg" width="350" height="300"><br><em><u> Teresiah kithei(his grandmother)</u></em></br>    <p>She took on the role of raising Nicholas, offering him love, guidance, and stability during this transitional period.</p>
-    
-    <p>Despite the upheaval in his personal life, Nicholas remained focused on his education.</p>
-    
-    <p>He continued attending primary school, where his dedication and commitment to learning stood out.</p>
-    
-    <p>Teachers recall him as a diligent student, always eager to absorb knowledge and excel in his studies.</p>
-    
-    <p>One particular teacher who made a lasting impact on Nicholas's life was <em>Mr. Mutuku</em>, his English teacher.</p>
-    
-    <p>Mr. Mutuku's passion for teaching and his ability to inspire his students left a profound impression on Nicholas.</p>
-    
-    <p>He credits Mr. Mutuku for instilling in him a love for the English language and for shaping his academic journey.</p>
-    
-    <p>As Nicholas progressed through primary school, he faced various challenges, but his determination never wavered.</p>
-    
-    <p>However, in 2017,  Nicholas terminated his primary school education by earning Kenya certificate of primary education</p>
-    
-    <p>Despite this setback, Nicholas remains grateful for the lessons learned and the support received along the way.</p>
-    
-    <p>He fondly remembers Mr. Mutuku and expresses his gratitude, saying, <em>"Teacher, be blessed wherever you are. It is you who I am today."</em></p>
-    
-    <p>Nicholas's early experiences shaped his resilience and determination, laying the foundation for his future endeavors.</p>
-    
-    <p>His gratitude towards those who guided him reflects his humility and appreciation for the support that helped him overcome obstacles and pursue his dreams.</p>
-    
-
-    <br>
-    <br>
-   <button type="container"></button>
-    click link below <a href="photos.html"><div> photo Gallary</div></a>
-<br>
-<div class="container" >
-  <h2>brief</h2>
-  <p>nicholas is a web developer with good grounds in website development<br></p>
-</div>
-
-<div class="container" id="contact">
-  <h2>Contact </h2>
-  <p></p> for inquiries
-  <ul>
-    <li>Email: nicholaskialo265@gmail.com</li>
-    <li>Phone: +254743763147</li>
-  </ul>
-</div>
-<br>
-© copyright 2024
-
-<!-- Add more tabcontent divs for additional pages -->
 
 <script>
-  // JavaScript code
-  // Function to open the selected tab
-  function openTab(tabName) {
-    var i, tabcontent;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-      tabcontent[i].style.display = "none";
-    }
-    document.getElementById(tabName).style.display = "block";
-  }
-</script>
+  var registeredUsers = {};
 
+  function registerUser(phoneNumber, password) {
+    registeredUsers[phoneNumber] = password;
+    alert("Registration successful! You can now login.");
+    document.getElementById("phoneNumberInput").value = "";
+    document.getElementById("passwordInput").value = "";
+    document.getElementById("registerForm").style.display = "none";
+  }
+
+  function loginUser(phoneNumber, password) {
+    if (registeredUsers[phoneNumber] === password) {
+      alert("Login successful! Redirecting to the next page.");
+      window.location.href = "welcome.html"; // Change "welcome.html" to the desired next page URL
+    } else {
+      alert("Incorrect phone number or password. Please try again.");
+    }
+  }
+
+  document.getElementById("registerBtn").addEventListener("click", function() {
+    document.getElementById("registerForm").style.display = "block";
+    document.getElementById("loginForm").style.display = "none";
+  });
+
+  document.getElementById("loginBtn").addEventListener("click", function() {
+    document.getElementById("loginForm").style.display = "block";
+    document.getElementById("registerForm").style.display = "none";
+  });
+
+  document.getElementById("submitRegistration").addEventListener("click", function() {
+    var phoneNumber = document.getElementById("phoneNumberInput").value;
+    var password = document.getElementById("passwordInput").value;
+    if (phoneNumber && password) {
+      registerUser(phoneNumber, password);
+    } else {
+      alert("Please enter your phone number and create a password.");
+    }
+  });
+
+  document.getElementById("submitLogin").addEventListener("click", function() {
+    var phoneNumber = document.getElementById("loginPhoneNumberInput").value;
+    var password = document.getElementById("loginPasswordInput").value;
+    if (phoneNumber && password) {
+      loginUser(phoneNumber, password);
+    } else {
+      alert("Please enter your phone number and password.");
+    }
+  });
+</script>
 
 </body>
 </html>
