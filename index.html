@@ -62,16 +62,16 @@
 <script>
   var registeredUsers = {};
 
-  function registerUser(phoneNumber, password) {
-    registeredUsers[phoneNumber] = password;
+  function registerUser(admisionnumber, password) {
+    registeredUsers[admisionnumber] = password;
     alert("Registration successful! You can now login.");
-    document.getElementById("phoneNumberInput").value = "";
+    document.getElementById("admisionnumberInput").value = "";
     document.getElementById("passwordInput").value = "";
     document.getElementById("registerForm").style.display = "none";
   }
 
-  function loginUser(phoneNumber, password) {
-    if (registeredUsers[phoneNumber] === password) {
+  function loginUser(admisionnumber, password) {
+    if (registeredUsers[admisionnumber] === password) {
       alert("Login successful! Redirecting to the next page.");
       window.location.href = "welcome.html"; // Change "welcome.html" to the desired next page URL
     } else {
@@ -81,7 +81,7 @@
 
   document.getElementById("registerBtn").addEventListener("click", function() {
     document.getElementById("registerForm").style.display = "block";
-    document.getElementById("loginForm").style.display = "none";
+    document.getElementById("loginForm").style.display = "flex";
   });
 
   document.getElementById("loginBtn").addEventListener("click", function() {
@@ -90,12 +90,12 @@
   });
 
   document.getElementById("submitRegistration").addEventListener("click", function() {
-    var phoneNumber = document.getElementById("phoneNumberInput").value;
+    var phoneNumber = document.getElementById("admisionnumberInput").value;
     var password = document.getElementById("passwordInput").value;
     if (phoneNumber && password) {
       registerUser(phoneNumber, password);
     } else {
-      alert("Please enter your phone number and create a password.");
+      alert("Please enter your admision number and create a password.");
     }
   });
 
@@ -105,7 +105,7 @@
     if (phoneNumber && password) {
       loginUser(phoneNumber, password);
     } else {
-      alert("Please enter your phone number and password.");
+      alert("Please enter your admision number and password.");
     }
   });
 </script>
