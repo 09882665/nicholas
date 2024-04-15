@@ -1,114 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login and Register</title>
-  <style>
-    
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;background-color: green;
-      border-style: outset;cursor:pointer;
-
-    }
-    .container {
-      width: 80%;
-      margin: 0 auto;
-      text-align: center;
-      padding-top: 50px;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 18px;
-      margin: 10px;
-      cursor:pointer;background-color: blue;
-      border-radius: 50px;
-
-    }
-    input[type="text"],
-    input[type="password"] {
-      padding: 8px;
-      font-size: 16px;
-      margin: 5px;
-    }
-    h1{text-align: center;}
-    logout
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nicholas's Journey at Nthunguni Secondary School</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-size: 18px; /* Increased font size */
+        }
+        p {
+            text-align: left;
+            margin-bottom: 10px;
+        }
+        p{background-color: rgb(16, 153, 96);width:auto; font-size: 20px;}
+    </style>
 </head>
 <body>
-<h1>WELCOME TO NTHUNGUNI SECONDARY SCHOOL<h1>
-<div class="container"><br>
-  <h1> </h1>
-    <button id="registerBtn">Register</button>
-  <button id="loginBtn">Login</button>
+   <div class="p" <h1 color="blue"> NICHOLAS ACADEMIC RECOGNITION BY NTHUNGUNI SECONDARY SCHOOL</h1>
+
+<p>In a remarkable turn of events, Nicholas's outstanding academic performance and exemplary conduct caught the attention of Mr. Pythias Matuanga, the principal of Nthunguni Secondary School.<br>
+Impressed by Nicholas's dedication and intelligence, Mr. Matuanga saw potential in him beyond being just a student.</p>
+
+<p>In the year following Nicholas's graduation,<em> Mr. Matuanga</em> </p>approached him with a unique proposition.<br>
+Recognizing Nicholas's leadership qualities and academic prowess, he offered him the opportunity to assist the teachers in teaching.<br>
+This invitation was a testament to Nicholas's exceptional character and the high regard in which he was held by the school administration.</p>
+
+<p>Nicholas accepted the offer with gratitude and humility, eager to contribute to the educational environment that had shaped him.<br>
+He found immense fulfillment in sharing his knowledge and experiences with his peers, serving as a mentor and role model to younger students.</p>
+<img src="C:\Users\user\Pictures\" width="350" height="300"></img><br><em><u>Nicholas in the  office</u></em></img>
+<p>Furthermore, Nicholas's efforts did not go unnoticed by the school community.<br>
+At the end of the second term, during the closing meeting of the year, Nicholas was given the opportunity to deliver a speech.<br>
+In his speech, he expressed his heartfelt appreciation to the principal, teachers, and fellow students for their unwavering support and cooperation throughout his journey at Nthunguni Secondary School.</p>
+
+<p>The culmination of Nicholas's time at Nthunguni Secondary School was marked by not only academic success but also by the recognition and respect he had earned from all those around him.<br>
+His dedication, humility, and resilience had left an indelible mark on the school community, inspiring others to strive for excellence and to overcome adversity with courage and determination.</p>
 </div>
-
-<div id="registerForm" style="display: none;">
-  <h2>Registration</h2>
-  <input type="text" id="phoneNumberInput" placeholder="Enter your phone number">
-  <input type="password" id="passwordInput" placeholder="Create a password">
-  <button id="submitRegistration">Register</button>
-</div>
-
-<div id="loginForm" style="display: none;">
-  <h2>Login</h2>
-  <input type="text" id="loginPhoneNumberInput" placeholder="Enter your phone number">
-  <input type="password" id="loginPasswordInput" placeholder="Enter your password">
-  <button id="submitLogin">Login</button>
-</div>
-
-<script>
-  var registeredUsers = {};
-
-  function registerUser(admisionnumber, password) {
-    registeredUsers[admisionnumber] = password;
-    alert("Registration successful! You can now login.");
-    document.getElementById("admisionnumberInput").value = "";
-    document.getElementById("passwordInput").value = "";
-    document.getElementById("registerForm").style.display = "none";
-  }
-
-  function loginUser(admisionnumber, password) {
-    if (registeredUsers[admisionnumber] === password) {
-      alert("Login successful! Redirecting to the next page.");
-      window.location.href = "welcome.html"; // Change "welcome.html" to the desired next page URL
-    } else {
-      alert("Incorrect phone number or password. Please try again.");
-    }
-  }
-
-  document.getElementById("registerBtn").addEventListener("click", function() {
-    document.getElementById("registerForm").style.display = "block";
-    document.getElementById("loginForm").style.display = "flex";
-  });
-
-  document.getElementById("loginBtn").addEventListener("click", function() {
-    document.getElementById("loginForm").style.display = "block";
-    document.getElementById("registerForm").style.display = "none";
-  });
-
-  document.getElementById("submitRegistration").addEventListener("click", function() {
-    var phoneNumber = document.getElementById("admisionnumberInput").value;
-    var password = document.getElementById("passwordInput").value;
-    if (phoneNumber && password) {
-      registerUser(phoneNumber, password);
-    } else {
-      alert("Please enter your admision number and create a password.");
-    }
-  });
-
-  document.getElementById("submitLogin").addEventListener("click", function() {
-    var phoneNumber = document.getElementById("loginPhoneNumberInput").value;
-    var password = document.getElementById("loginPasswordInput").value;
-    if (phoneNumber && password) {
-      loginUser(phoneNumber, password);
-    } else {
-      alert("Please enter your admision number and password.");
-    }
-  });
-</script>
-
 </body>
 </html>
